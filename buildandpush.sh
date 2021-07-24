@@ -2,11 +2,6 @@
 
 docker build . -t devopsapp:latest
 
-IMAGEID= $(docker images -q devopsapp:latest)
-REGION= $(oci iam region-subscription list | grep -oP '(?<="region-name": ")[^"]*')
-NAMESPACE= $(oci os ns get | grep -oP '(?<="data": ")[^"]*')
+docker tag $(docker images -q devopsapp:latest) $(oci iam region-subscription list | grep -oP '(?<="region-name": ")[^"]*').ocir.io/$(oci os ns get | grep -oP '(?<="data": ")[^"]*')/devopsworkshop/devopsapp:latest
 
-
-docker tag $IMAGEID $REGION.ocir.io/$NAMESPACE/devopsworkshop/devopsapp:latest
-
-docker push $REGION.ocir.io/$NAMESPACE/devopsworkshop/devopsapp:latest
+docker push $(oci iam region-subscription list | grep -oP '(?<="region-name": ")[^"]*').ocir.io/$(oci os ns get | grep -oP '(?<="data": ")[^"]*')/devopsworkshop/devopsapp:latest
