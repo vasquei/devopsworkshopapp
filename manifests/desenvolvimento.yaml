@@ -1,0 +1,47 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dev-app
+  namespace: dev
+  labels:
+    app: dev-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dev-app
+  template:
+    metadata:
+      labels:
+        app: dev-app
+    spec:
+      containers:
+      - name: dev-app
+        image: ${IMGPATH}
+        ports:
+        - containerPort: 8080
+      imagePullSecrets:
+      - name: ocir
+      
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-dev-app
+  namespace: dev
+spec:
+  selector:
+    app: dev-app
+  ports:
+    - port: 80
+      targetPort: 8080
+  type: LoadBalancer
