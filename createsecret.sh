@@ -7,7 +7,7 @@ read authtoken
 
 USERNAME="$(oci os ns get | grep -oP '(?<="data": ")[^"]*')/$(oci iam user get --user-id ${clouduserocid} | grep -oP '(?<="name": ")[^"]*')"
 
-kubeclt create namespace dev
+kubectl create namespace dev
 kubectl create namespace prod
 kubectl create secret -n dev docker-registry ocir --docker-server=$(oci iam region-subscription list | grep -oP '(?<="region-key": ")[^"]*' | tr [:upper:] [:lower:]).ocir.io \
 --docker-username='${USERNAME}'  \
