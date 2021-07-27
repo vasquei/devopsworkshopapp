@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: dev-app
-  namespace: dev
+  name: prod-app
+  namespace: prod
   labels:
-    app: dev-app
+    app: prod-app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: dev-app
+      app: prod-app
   template:
     metadata:
       labels:
-        app: dev-app
+        app: prod-app
     spec:
       containers:
-      - name: dev-app
+      - name: prod-app
         image: ${IMGPATH}
         ports:
         - containerPort: 8080
@@ -29,11 +29,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: svc-dev-app
-  namespace: dev
+  name: svc-prod-app
+  namespace: prod
 spec:
   selector:
-    app: dev-app
+    app: prod-app
   ports:
     - port: 80
       targetPort: 8080
