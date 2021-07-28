@@ -13,6 +13,11 @@ app.get('/fail', (req, res) => {
     res.send({ "status": false })
 })
 
+app.get('/final', (req, res) => {
+    console.log("Final call received")
+    res.send({ "message": "Parabéns, você concluiu o workshop" })
+})
+
 app.listen(port, () => {
     console.log(`App listening at http://localhost:${port}`)
 })
